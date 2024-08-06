@@ -15,7 +15,7 @@ public class BestPlayerData
 
 public class MainManager : MonoBehaviour
 {
-    public const string DATA_PATH = "/playerData.json";
+    public const string DATA_PATH = "/newPlayerData.json";
 
 
     public static MainManager Instance { get; private set; }

@@ -63,6 +63,9 @@ public class MainMenuUI : MonoBehaviour
             BestPlayerData bestPlayerData = JsonUtility.FromJson<BestPlayerData>(json);
 
             UpdateBestScoreText(bestPlayerData.playerName, bestPlayerData.score);
+        } else
+        {
+            UpdateBestScoreText("", 0);
         }
     }
 
