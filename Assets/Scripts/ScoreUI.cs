@@ -9,13 +9,11 @@ public class ScoreUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI bestScoreText;
-    [SerializeField] private TextMeshProUGUI testNameText;
 
     private void Start()
     {
         MainManager.Instance.OnPointAdded += MainManager_OnPointAdded;
         MainManager.Instance.OnGameOver += MainManager_OnGameOver;
-        testNameText.text = PlayerData.GetPlayerName();
         UpdateBestScore();
     }
 
