@@ -1,13 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[Serializable]
+public class BestPlayerData
+{
+    public int score;
+    public string playerName;
+}
+
 public class MainManager : MonoBehaviour
 {
+    public const string DATA_PATH = "/playerData.json";
+
+
     public static MainManager Instance { get; private set; }
+
 
     public event EventHandler OnGameOver;
     public event EventHandler<OnPointAddedEventArgs> OnPointAdded;
@@ -17,12 +29,7 @@ public class MainManager : MonoBehaviour
         public int points;
     }
 
-    public class PlayerData
-    {
-        public int score;
-        public string playerName;
-    }
-
+    
 
     public Brick BrickPrefab;
     public int LineCount = 6;
@@ -98,11 +105,52 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         m_GameOver = true;
+        TrySaveBestDataPlayer();
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
 
-    void SaveData()
+    void TrySaveBestDataPlayer()
     {
 
+        if (!IsBestScore()) return;
+        
+        BestPlayerData playerData = new BestPlayerData();
+        playerData.playerName = PlayerData.GetPlayerName();
+        playerData.score = m_Points;
+
+        string json = JsonUtility.ToJson(playerData);
+        File.WriteAllText(Application.persistentDataPath + DATA_PATH, json);
+
     }
+
+    bool IsBestScore()
+    {
+
+        BestPlayerData bestPlayerData =  GetBestPlayerData();
+
+        if(bestPlayerData != null)
+        {
+            if (bestPlayerData.score > m_Points) return false;
+        }
+
+        return true;
+    }
+
+    public BestPlayerData GetBestPlayerData()
+    {
+        string path = Application.persistentDataPath + DATA_PATH;
+
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+
+            BestPlayerData bestPlayerData = JsonUtility.FromJson<BestPlayerData>(json);
+
+            return bestPlayerData;
+
+        }
+        return null;
+    }
+
+
 }

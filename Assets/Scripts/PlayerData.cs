@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public static class PlayerData
 {
-    // Start is called before the first frame update
-    void Start()
+
+    static string playerName;
+    static int playerScore;
+    
+    public static void SetPlayerName(string newPlayerName)
     {
-        
+        playerName = newPlayerName;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static string GetPlayerName() => playerName;
+
+
 }

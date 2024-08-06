@@ -1714,6 +1714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1355591040}
   bestScoreText: {fileID: 1472906768}
+  testNameText: {fileID: 1930942241}
 --- !u!1 &1930942239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,8 +1799,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 29.12
+  m_fontSizeBase: 29.12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

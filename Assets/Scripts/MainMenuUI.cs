@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -14,10 +16,18 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
 
+    //[Serializable]
+    //public class BestPlayerData
+    //{
+    //    public int score;
+    //    public string playerName;
+    //}
+
     private void Awake()
     {
         startButton.onClick.AddListener(() =>
         {
+            PlayerData.SetPlayerName(nameInputField.text);
             SceneManager.LoadScene(1);
         });
 
@@ -34,11 +44,31 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         SetRandomPlayerName();
+        LoadData();
     }
 
     void SetRandomPlayerName()
     {
-        nameInputField.text = "Player" + Random.Range(100, 1000);
+        nameInputField.text = "Player" + UnityEngine.Random.Range(100, 1000);
+    }
+
+    void LoadData()
+    {
+        string path = Application.persistentDataPath + MainManager.DATA_PATH;
+
+        if(File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+
+            BestPlayerData bestPlayerData = JsonUtility.FromJson<BestPlayerData>(json);
+
+            UpdateBestScoreText(bestPlayerData.playerName, bestPlayerData.score);
+        }
+    }
+
+    void UpdateBestScoreText(string playerName, int score)
+    {
+        bestScoreText.text = "Best Score: " + playerName + " : " + score;
     }
 
 }
