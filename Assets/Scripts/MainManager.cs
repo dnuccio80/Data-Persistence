@@ -17,6 +17,12 @@ public class MainManager : MonoBehaviour
         public int points;
     }
 
+    public class PlayerData
+    {
+        public int score;
+        public string playerName;
+    }
+
 
     public Brick BrickPrefab;
     public int LineCount = 6;
@@ -93,5 +99,10 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         OnGameOver?.Invoke(this, EventArgs.Empty);
+    }
+
+    void SaveData()
+    {
+
     }
 }
